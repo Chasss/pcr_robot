@@ -19,6 +19,13 @@ def is_name_in_members(name):
             return True
     return False
 
+def get_today():
+    today = datetime.date.today().strftime('%Y-%m-%d')
+    yestoday = (datetime.date.today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+    hours_now = datetime.datetime.now().strftime('%H')
+    if int(hours_now)>=0 and int(hours_now)<5 :
+        return yestoday
+    return today
 
 @on_command('record',aliases=('记录'),only_to_me=False)
 async def record(session: CommandSession):
@@ -54,9 +61,8 @@ async def _(session: CommandSession):
 
     
 async def record_info(info: str) -> str:
-    today = datetime.date.today().strftime('%Y-%m-%d')
-    pcr_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
-    record_file=open('D:/project/qq_rob/pcr_robot/resource/record/'+today+'.txt','a',encoding='utf-8')
+    today = get_today()
+    record_file=open(res_path+'record/'+today+'.txt','a',encoding='utf-8')
     record_file.write(f'{info}'+'\n')
     record_file.close()
     return '记录成功: '+today+f' {info}'
