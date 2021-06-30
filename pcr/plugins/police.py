@@ -60,7 +60,7 @@ def get_lazy_members(date):
         name=name.strip()
         names=name.split(' ')
         if attack_times[names[0]] < 3:
-            lazy_members += '[CQ:at,qq='+names[1]+']'
+            lazy_members += '[CQ:at,qq='+names[1]+']'+'('+str(attack_times[names[0]])+')'+' | '
 
     return lazy_members
 @on_command('police',aliases=('出警'),only_to_me=False)
@@ -69,7 +69,7 @@ async def police(session: CommandSession):
     lazy_members = get_lazy_members(today)
     hour_now = datetime.datetime.now().strftime('%H')
     time_now = datetime.datetime.now().strftime('%H:%M')
-    if int(hour_now) > 18:
+    if int(hour_now) > 18 or (int(hour_now) >= 0 and int(hour_now) < 5):
         message = '现在时间是'+time_now+',出刀警察出动\n检测到'+lazy_members+'今日还未记录或出满三刀'
         await session.send(message)
     else:

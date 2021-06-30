@@ -48,13 +48,13 @@ def get_lazy_members(date):
     return lazy_members
 
 
-@nonebot.scheduler.scheduled_job('cron', hour='23',minute='30')
+@nonebot.scheduler.scheduled_job('cron', hour=2,minute=0)
 async def _():
     bot = nonebot.get_bot()
     today = datetime.date.today().strftime('%Y-%m-%d')
     lazy_members=get_lazy_members(today)
     try:
         await bot.send_group_msg(group_id=1084228533,
-                                 message='现在是23点30分,出刀警察出动\n检测到'+lazy_members+'今日还未记录或出满三刀')
+                                 message='现在是2点整,出刀警察出动\n检测到'+lazy_members+'今日还未记录或出满三刀')
     except CQHttpError:
         pass
